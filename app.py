@@ -2,12 +2,9 @@ import flask
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
-import os
 
 app = flask.Flask(__name__, template_folder='html')
 @app.route('/', methods=['GET', 'POST'])
-
-
 
 def index():
 
@@ -36,7 +33,6 @@ def index():
         df = df[df['beginning']==True]
         df = df[["parentEntity","word"]]
         js = df.to_json(orient = "records")
-        #Convert result to Json
         return js
 
     if flask.request.method == 'GET':
@@ -48,5 +44,5 @@ def index():
 
         return flask.render_template('index.html', result=jsonResult, original_input=input)
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True)
