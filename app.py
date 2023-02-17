@@ -2,16 +2,12 @@ import flask
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
+import json
+import re
 
-app = flask.Flask(__name__, template_folder='html')
-@app.route('/', methods=['GET', 'POST'])
-
-def index():
-
-    def postProcessing(input):
+def postProcessing(input):
         tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
         model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
-
         languageModel = pipeline("ner", model=model, tokenizer=tokenizer)
         ner_results = languageModel(input)
 
@@ -35,14 +31,45 @@ def index():
         js = df.to_json(orient = "records")
         return js
 
+def highlightWord(js,text):
+
+    colors = {
+            'ORG': 'green',
+            'LOC': 'red',
+            'PER': 'blue',
+            'MISC': 'purple'
+        }
+
+    json_data = json.loads(js)
+    
+    words = re.findall(r'\w+|[^\w\s]+', text)
+    highlighted_words = []
+    for word in words:
+        highlighted = False
+        for item in json_data:
+            if item['word'] == word:
+                highlighted_words.append(f'<mark style="background-color: {colors[item["parentEntity"]]}">{word}</mark>')
+                highlighted = True
+                break
+        if not highlighted:
+            highlighted_words.append(word)
+    highlighted_text = ' '.join(highlighted_words)
+
+    return highlighted_text
+
+app = flask.Flask(__name__, template_folder='html')
+@app.route('/', methods=['GET', 'POST'])
+
+def index():
+
     if flask.request.method == 'GET':
         return(flask.render_template('index.html'))
     
     if flask.request.method == 'POST':
         input = flask.request.form['input']
         jsonResult = postProcessing(input)
-
-        return flask.render_template('index.html', result=jsonResult, original_input=input)
+        htmlResult = highlightWord(jsonResult,input)
+        return flask.render_template('index.html', result=htmlResult, original_input=input)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -10,20 +10,20 @@ form {
     width: 35%;
     border: 1px solid #ccc;
 }
+
 </style>
 <head>
     <title>Enter Text</title>
     <script type="text/javascript">
 		// Define the JSON data
-		var jsonData = '{{result}}';
-
+		
 		function highlightWords() {
+			var jsonData = '{{result}}';
 			// Get the text from the JavaScript variable
-			var inputText = document.getElementById("input-text").innerHTML;
+			var inputText = '{{original_input}}'
 
 			// Get the div that will contain the highlighted text
 			var div = document.getElementById("output-div");
-
 			// Split the input text into individual words and check if they appear in the JSON data
 			var words = inputText.trim().split(" ");
 			for (var i = 0; i < words.length; i++) {
@@ -63,11 +63,12 @@ form {
 </form>
 
 <br>
-<div id="resultID">Please click highlight words button!</div>
-<div id="resultID">{{result}}</div>
-<p id="input-text">{{original_input}}</p>
-<button onclick="highlightWords()">Highlight Words</button>
-<div id="output-div"></div>
+<div id="resultID">{{result | safe}}</div>
+<!-- <div id="resultID">Please click highlight words button!</div> -->
+<!-- <div id="resultID">{{result}}</div> -->
+<!-- <p id="input-text">{{original_input}}</p> -->
+<!-- <button onclick="highlightWords()">Highlight Words</button> -->
+<!-- <div id="output-div"></div> -->
 
 <p style="font-size:20px; color:red">Location (LOC)</p>
 <p style="font-size:20px; color:green">Organizations (org)</p>
