@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<style>
+form {
+    margin: auto;
+    width: 35%;
+}
+.result {
+    margin: auto;
+    width: 35%;
+    border: 1px solid #ccc;
+}
+</style>
+<head>
+    <title>Enter Text</title>
+    <script type="text/javascript">
+		// Define the JSON data
+		var jsonData = '{{result}}';
+
+		function highlightWords() {
+			// Get the text from the JavaScript variable
+			var inputText = document.getElementById("input-text").innerHTML;
+
+			// Get the div that will contain the highlighted text
+			var div = document.getElementById("output-div");
+
+			// Split the input text into individual words and check if they appear in the JSON data
+			var words = inputText.trim().split(" ");
+			for (var i = 0; i < words.length; i++) {
+				// Loop through the JSON data and check if the word appears
+				var highlighted = false;
+				for (var j = 0; j < jsonData.length; j++) {
+					if (jsonData[j].word === words[i]) {
+						// If the word appears, wrap it in a span with red color
+						var span = document.createElement("span");
+						span.style.color = "red";
+						span.textContent = words[i] + " ";
+						div.appendChild(span);
+						highlighted = true;
+						break;
+					};
+				}
+				if (!highlighted) {
+					// If the word doesn't appear, wrap it in a span with black color
+					var span = document.createElement("span");
+					span.style.color = "black";
+					span.textContent = words[i] + " ";
+					div.appendChild(span);
+				}
+			}
+		}
+	</script>
+</head>
+
+<form action="{{ url_for('index') }}" method="POST">
+    <fieldset>
+        <legend>Text input:</legend>
+        <textarea name="input" rows="10" cols="80" required></textarea>
+        <br>
+        <br>
+        <input type="submit">
+    </fieldset>
+</form>
+
+<br>
+<div id="resultID">Please click highlight words button!</div>
+<div id="resultID">{{result}}</div>
+<p id="input-text">{{original_input}}</p>
+<button onclick="highlightWords()">Highlight Words</button>
+<div id="output-div"></div>
+
+<p style="font-size:20px; color:red">Location (LOC)</p>
+<p style="font-size:20px; color:green">Organizations (org)</p>
+<p style="font-size:20px; color:blue">Person (PER)</p>
+<p style="font-size:20px; color:purple">Miscellaneous (MISC)</p>
+
+
+
+
+</html>
