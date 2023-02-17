@@ -7,4 +7,4 @@ jinja2
 Werkzeug
 itsdangerous
 tensorflow==2.8.0
-pytorch==1.11.0
+torch==1.11.0
