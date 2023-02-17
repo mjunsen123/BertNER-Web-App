@@ -6,3 +6,5 @@ flask==2.2.3
 jinja2
 Werkzeug
 itsdangerous
+tensorflow
+pytorch
