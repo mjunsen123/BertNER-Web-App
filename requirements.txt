@@ -6,4 +6,5 @@ flask==2.2.3
 jinja2
 Werkzeug
 itsdangerous
-torch
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==1.11.0+cpu
