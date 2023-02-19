@@ -5,9 +5,11 @@ from transformers import pipeline
 import json
 import re
 
+tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
+model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
+
 def postProcessing(input):
-        tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
-        model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
+        
         languageModel = pipeline("ner", model=model, tokenizer=tokenizer)
         ner_results = languageModel(input)
 
