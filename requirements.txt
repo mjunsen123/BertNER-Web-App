@@ -8,4 +8,4 @@ Werkzeug
 itsdangerous
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.13.1+cpu
-torchvision==0.12.0+cpu
+torchvision==0.2.2
