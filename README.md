@@ -9,4 +9,4 @@ Below is the colour set:
 'PER': 'blue',
 'MISC': 'purple'
 
-The repo works in local computer but failed to work in Heroku (out of memory issue), possible solution will be deploy on AWS EC2 instance and currently working on it
+Latest update (19/02/2023) : Work on local environment but failed on both Heroku (versioning problem) and AWS Elastic BeanStalk (memory issue in free tier)
