@@ -122,9 +122,6 @@ termcolor==2.2.0
 terminado==0.17.1
 tinycss2==1.2.1
 tokenizers==0.13.2
-torch
-torchaudio
-torchvision
 tornado==6.2
 tqdm==4.64.1
 traitlets==5.9.0
