@@ -33,7 +33,6 @@ gast==0.4.0
 google-auth==2.16.1
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
-grpcio==1.46.3
 huggingface-hub==0.12.1
 idna==3.4
 importlib-metadata==6.0.0
