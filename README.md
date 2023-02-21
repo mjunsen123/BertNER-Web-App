@@ -70,5 +70,7 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
 8. Create an EBS environment and application for the flask application.
 9. Create a code pipeline, with the input (source) from GitHub, and output (deploy) to the EBS application which created earlier.
 10. Scale up the resource (EC2 instance) if the web-server crash (Web application crash with free-tier instance [see error below], works well with t2.medium instance).
+
 `web: RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 2359296 bytes. Error code 12 (Cannot allocate memory)`
+
 11. Configure the DNS if needed.
