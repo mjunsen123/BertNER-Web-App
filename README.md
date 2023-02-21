@@ -11,12 +11,53 @@ No fine-tuning is performed to the model and transformer pipelines is used for m
 
 The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purple)`
 
-## High-level of the architecture workflow
+## High-level workflow
+### Model inference
 1. `Flask` is used as web application framework and `Gunicorn` is used as the server gateway.
-2. Create a form in `index.html` (front-end) which serve as the text input
-2. Create an `app.py` (back-end) which take the input from front end
-Load the pre-trained model `AutoModelForTokenClassification` and tokenizer `AutoTokenizer` by using HuggingFace.
-2. 
+  1.1. Create a form in `index.html` (front-end) which serve as the text input
+  1.2. Create an `app.py` (back-end) which take the input from front end
+2. Load the pre-trained model `AutoModelForTokenClassification` and tokenizer `AutoTokenizer` by using HuggingFace.
+3. Tokenize the input and feed to the model for inference by using `pipeline` from transformer library.
+4. Post-process the output result (see postProcessing function)
+Raw result 
+
+"[{'entity': 'B-ORG',
+  'score': 0.99754566,
+  'index': 1,
+  'word': 'R',
+  'start': 0,
+  'end': 1},
+ {'entity': 'I-ORG',
+  'score': 0.9739576,
+  'index': 2,
+  'word': '##G',
+  'start': 1,
+  'end': 2},
+ {'entity': 'I-ORG',
+  'score': 0.9781341,
+  'index': 3,
+  'word': '##U',
+  'start': 2,
+  'end': 3},
+ {'entity': 'B-LOC',
+  'score': 0.99568594,
+  'index': 9,
+  'word': 'Aberdeen',
+  'start': 31,
+  'end': 39},
+ {'entity': 'B-LOC',
+  'score': 0.9995809,
+  'index': 15,
+  'word': 'Scotland',
+  'start': 60,
+  'end': 68}]"
+  
+6. Transform the processed JSON result to HTML by highlighting the keyword with different colours (see highlightWord function).
+7. Return the transformed HTML
+### Model deployment
+1. Test the model from local host (`flask run` command from terminal)
+2. Once inference made successfully, ready to deploy.
+3. THe easiest way is deploy via heroku as the process is very straight forward. However, 
 
 
 Latest update (19/02/2023) : Work on local environment but failed on both Heroku and AWS Elastic BeanStalk (memory issue)
