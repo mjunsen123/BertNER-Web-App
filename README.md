@@ -22,7 +22,7 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
 
 **Raw result as follow:**
 
-"[{'entity': 'B-ORG',
+`[{'entity': 'B-ORG',
   'score': 0.99754566,
   'index': 1,
   'word': 'R',
@@ -51,7 +51,7 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
   'index': 15,
   'word': 'Scotland',
   'start': 60,
-  'end': 68}]"
+  'end': 68}]`
   
 6. Transform the processed JSON result to HTML by highlighting the keyword with different colours (see highlightWord function).
 7. Return the transformed HTML
@@ -62,11 +62,13 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
 <kbd>
 <img width="1156" alt="image" src="https://user-images.githubusercontent.com/37623890/219966869-0152ac29-53da-4fb5-b4d4-8cb065641289.png">
 </kbd>
+
 4. Therefore, `AWS Elastic BeanStalk` (EBS) is an ideal choice thanks to the scalability and simplicity. See more: https://aws.amazon.com/elasticbeanstalk/
-5. To deploy flask web-app to EBS, `AWS code pipeline` service is used to automate continuous delivery pipeline (via GitHub).
-6. To do so, first push the flask application to GitHub.
-7. Create an EBS environment and application for the flask application.
-8. Create a code pipeline, with the input (source) from GitHub, and output (deploy) to the EBS application which created earlier.
-9. Scale up the resource (EC2 instance) if the web-server crash (Web application crash with free-tier instance [see error below], works well with t2.medium instance).
+
+6. To deploy flask web-app to EBS, `AWS code pipeline` service is used to automate continuous delivery pipeline (via GitHub).
+7. To do so, first push the flask application to GitHub.
+8. Create an EBS environment and application for the flask application.
+9. Create a code pipeline, with the input (source) from GitHub, and output (deploy) to the EBS application which created earlier.
+10. Scale up the resource (EC2 instance) if the web-server crash (Web application crash with free-tier instance [see error below], works well with t2.medium instance).
 `web: RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 2359296 bytes. Error code 12 (Cannot allocate memory)`
 11. Configure the DNS if needed.
