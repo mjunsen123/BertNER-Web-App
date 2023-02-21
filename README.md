@@ -19,7 +19,8 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
 2. Load the pre-trained model `AutoModelForTokenClassification` and tokenizer `AutoTokenizer` by using HuggingFace.
 3. Tokenize the input and feed to the model for inference by using `pipeline` from transformer library.
 4. Post-process the output result (see postProcessing function)
-Raw result 
+
+**Raw result as follow:**
 
 "[{'entity': 'B-ORG',
   'score': 0.99754566,
@@ -57,18 +58,15 @@ Raw result
 ### Model deployment
 1. Test the model from local host (`flask run` command from terminal)
 2. Once inference made successfully, ready to deploy.
-3. THe easiest way is deploy via heroku as the process is very straight forward. However, 
-
-
-Latest update (19/02/2023) : Work on local environment but failed on both Heroku and AWS Elastic BeanStalk (memory issue)
-
-Update Heroku (memory error)
+3. THe easiest way is deploy via heroku as the process is very straight forward. However, the web server will crash due to the memory limitation in free tier. Error as below:
+<kbd>
 <img width="1156" alt="image" src="https://user-images.githubusercontent.com/37623890/219966869-0152ac29-53da-4fb5-b4d4-8cb065641289.png">
-
-Update Elastic BeanStalk (same memory error)
-"web: RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 2359296 bytes. Error code 12 (Cannot allocate memory)"
-
-Latest Update (Elastic BeanStalk)
-Manage to deploy on elastic beanstalk, with t2.medium instance (not free tier).
-Link :  http://bert-ner-env.eba-wfszxiqr.eu-west-2.elasticbeanstalk.com
-As the instance is charged per hour, please contact me via email yee_js@hotmail.com if demo required. Thank you.
+</kbd>
+4. Therefore, `AWS Elastic BeanStalk` (EBS) is an ideal choice thanks to the scalability and simplicity. See more: https://aws.amazon.com/elasticbeanstalk/
+5. To deploy flask web-app to EBS, `AWS code pipeline` service is used to automate continuous delivery pipeline (via GitHub).
+6. To do so, first push the flask application to GitHub.
+7. Create an EBS environment and application for the flask application.
+8. Create a code pipeline, with the input (source) from GitHub, and output (deploy) to the EBS application which created earlier.
+9. Scale up the resource (EC2 instance) if the web-server crash (Web application crash with free-tier instance [see error below], works well with t2.medium instance).
+`web: RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 2359296 bytes. Error code 12 (Cannot allocate memory)`
+11. Configure the DNS if needed.
