@@ -14,9 +14,7 @@ The colour set as follow : `ORG(green)`, `LOC(red)`, `PER(blue)` and `MISC(purpl
 ## High-level workflow
 ### Model inference
 1. `Flask` is used as web application framework and `Gunicorn` is used as the server gateway.
-
   1.1. Create a form in `index.html` (front-end) which serve as the text input
- 
   1.2. Create an `app.py` (back-end) which take the input from front end
 2. Load the pre-trained model `AutoModelForTokenClassification` and tokenizer `AutoTokenizer` by using HuggingFace.
 3. Tokenize the input and feed to the model for inference by using `pipeline` from transformer library.
